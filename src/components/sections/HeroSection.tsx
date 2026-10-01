@@ -48,18 +48,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartProject, onExpl
             </p>
 
             {/* Interactive Engineering Callouts / Standards in Newta Palette */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs font-mono text-white">
-              <div className="flex items-center gap-2 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs font-mono text-white">
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30 min-w-0">
                 <Zap className="w-4 h-4 text-[#AFDDE5] flex-shrink-0" />
-                <span>Sub-150ms Response</span>
+                <span className="truncate sm:whitespace-normal">Sub-150ms Response</span>
               </div>
-              <div className="flex items-center gap-2 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30">
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30 min-w-0">
                 <Shield className="w-4 h-4 text-[#0FA4AF] flex-shrink-0" />
-                <span>Zero Slop Architecture</span>
+                <span className="truncate sm:whitespace-normal">Zero Slop Architecture</span>
               </div>
-              <div className="col-span-2 sm:col-span-1 flex items-center gap-2 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30">
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045]/80 border border-[#0FA4AF]/30 min-w-0">
                 <Sparkles className="w-4 h-4 text-[#AFDDE5] flex-shrink-0" />
-                <span>Production-Ready AI</span>
+                <span className="truncate sm:whitespace-normal">Production-Ready AI</span>
               </div>
             </div>
 

@@ -26,7 +26,7 @@ export const ProcessSection: React.FC = () => {
         {/* Interactive Step Navigator with Connecting Energy Line */}
         <div className="relative mb-12">
           {/* Connecting Line between steps (Desktop) */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-[#024045] -translate-y-1/2 z-0 rounded-full">
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-[#024045] -translate-y-1/2 z-0 rounded-full pointer-events-none">
             <div
               className="h-full bg-gradient-to-r from-[#0FA4AF] via-[#AFDDE5] to-[#FFFFFF] transition-all duration-500 rounded-full"
               style={{ width: `${(activeStepIndex / (PROCESS_STEPS.length - 1)) * 100}%` }}
@@ -37,17 +37,20 @@ export const ProcessSection: React.FC = () => {
             {PROCESS_STEPS.map((step, idx) => {
               const isCurrent = activeStepIndex === idx;
               const isPast = idx < activeStepIndex;
+              const isLastOnMobile = idx === 4;
 
               return (
                 <button
                   key={step.number}
                   onClick={() => setActiveStepIndex(idx)}
                   className={`p-4 rounded-xl text-left transition-all duration-200 border cursor-pointer ${
+                    isLastOnMobile ? 'col-span-2 sm:col-span-1' : ''
+                  } ${
                     isCurrent
                       ? 'bg-[#0FA4AF] border-[#AFDDE5] shadow-lg shadow-[#0FA4AF]/30'
                       : isPast
                       ? 'bg-[#024045] border-[#0FA4AF]/40 text-white'
-                      : 'bg-[#024045]/60 border-[#0FA4AF]/20 text-[#AFDDE5] hover:border-[#AFDDE5]/60'
+                      : 'bg-[#024045] border-[#0FA4AF]/20 text-[#AFDDE5] hover:border-[#AFDDE5]/60'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">

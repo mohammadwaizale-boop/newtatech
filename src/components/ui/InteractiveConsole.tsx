@@ -83,15 +83,15 @@ export const InteractiveConsole: React.FC = () => {
     <div className="rounded-3xl bg-[#024045]/95 border border-[#0FA4AF]/40 p-6 sm:p-8 font-mono text-xs shadow-2xl">
       {/* Console Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#0FA4AF]/30">
-        <div className="flex items-center gap-2.5">
-          <Terminal className="w-4 h-4 text-[#AFDDE5]" />
-          <span className="text-white font-bold tracking-tight">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <Terminal className="w-4 h-4 text-[#AFDDE5] flex-shrink-0" />
+          <span className="text-white font-bold tracking-tight truncate">
             NEWTA_RUNTIME // INTERACTIVE PIPELINE HARNESS
           </span>
         </div>
 
         {/* Workflow Selector Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#003135] rounded-xl border border-[#0FA4AF]/30">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#003135] rounded-xl border border-[#0FA4AF]/30">
           <button
             onClick={() => { setSelectedWorkflow('agent'); handleReset(); }}
             className={`px-3 py-1.5 rounded-lg text-[11px] transition-colors cursor-pointer ${
@@ -163,7 +163,7 @@ export const InteractiveConsole: React.FC = () => {
       </div>
 
       {/* Live Telemetry Row */}
-      <div className="mt-4 pt-4 border-t border-[#0FA4AF]/30 grid grid-cols-3 gap-2 text-center text-[11px]">
+      <div className="mt-4 pt-4 border-t border-[#0FA4AF]/30 grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-[11px]">
         <div className="p-2.5 rounded-xl bg-[#003135] border border-[#0FA4AF]/30">
           <span className="text-[#AFDDE5]/80 block">PIPELINE STATUS</span>
           <span className={`font-bold ${metrics.status === 'COMPLETED' ? 'text-emerald-400' : 'text-[#AFDDE5]'}`}>

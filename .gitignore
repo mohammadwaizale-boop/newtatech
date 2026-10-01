@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+smtp.config.json
+*.pem
+*.key
+*.cert
+backups/

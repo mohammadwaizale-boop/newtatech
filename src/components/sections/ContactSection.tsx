@@ -27,6 +27,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
   const [isTestingEmail, setIsTestingEmail] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string; previewUrl?: string | null } | null>(null);
   const [showConfigModal, setShowConfigModal] = useState(false);
+  const [adminKey, setAdminKey] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const formMountTime = React.useRef<number>(Date.now());
   const [configForm, setConfigForm] = useState({
     smtp_host: 'smtp.gmail.com',
     smtp_port: 587,
@@ -66,7 +69,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
     setIsTestingEmail(true);
     setTestResult(null);
     try {
-      const res = await fetch('/api/smtp/test', { method: 'POST' });
+      const headers: Record<string, string> = {};
+      if (adminKey.trim()) {
+        headers['x-admin-key'] = adminKey.trim();
+      }
+      const res = await fetch('/api/smtp/test', {
+        method: 'POST',
+        headers,
+      });
       const data = await res.json();
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Diagnostic test failed on mail server.');
@@ -90,9 +100,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
     e.preventDefault();
     setConfigSaveStatus('Validating and verifying SMTP handshake...');
     try {
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (adminKey.trim()) {
+        headers['x-admin-key'] = adminKey.trim();
+      }
       const res = await fetch('/api/smtp/configure', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(configForm),
       });
       const data = await res.json();
@@ -151,7 +165,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          website_fax: honeypot,
+          submission_elapsed_ms: Date.now() - formMountTime.current,
+        }),
       });
 
       const data = await response.json();
@@ -219,15 +237,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                   <Link2 className="w-4 h-4 text-[#AFDDE5] group-hover:rotate-45 transition-transform" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-white tracking-wide">LINKED TEAM DISPATCH</span>
-                    <span className="text-[10px] text-[#AFDDE5] bg-[#003135] px-1.5 py-0.5 rounded border border-[#0FA4AF]/40">Delivers to Both</span>
+                    <span className="text-[10px] text-[#AFDDE5] bg-[#003135] px-1.5 py-0.5 rounded border border-[#0FA4AF]/40 whitespace-nowrap">Delivers to Both</span>
                   </div>
                   <div className="text-[11px] text-[#AFDDE5]/80 truncate font-mono mt-0.5">
                     mohammadwaizale@gmail.com + awanareeb450@gmail.com
                   </div>
                 </div>
-                <span className="text-[11px] text-[#AFDDE5] font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0">
+                <span className="text-[11px] text-[#AFDDE5] font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0 whitespace-nowrap">
                   Email Both ↗
                 </span>
               </a>
@@ -236,11 +254,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <a
                   href={`mailto:${COMPANY_INFO.email}?cc=awanareeb450@gmail.com&subject=Project%20Inquiry%20%E2%80%94%20Newta%20Tech`}
-                  className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045] border border-[#0FA4AF]/30 hover:border-[#AFDDE5] text-[#AFDDE5] hover:text-white transition-all group"
+                  className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045] border border-[#0FA4AF]/30 hover:border-[#AFDDE5] text-[#AFDDE5] hover:text-white transition-all group min-w-0"
                   title="Direct to mohammadwaizale@gmail.com (CC: awanareeb450@gmail.com)"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#0FA4AF] group-hover:scale-110 transition-transform flex-shrink-0" />
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0 flex-1 overflow-hidden">
                     <div className="font-semibold text-white truncate text-[11px]">{COMPANY_INFO.email}</div>
                     <div className="text-[9px] text-[#AFDDE5]">Waiz • Linked</div>
                   </div>
@@ -248,11 +266,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
 
                 <a
                   href={`mailto:awanareeb450@gmail.com?cc=mohammadwaizale@gmail.com&subject=Project%20Inquiry%20%E2%80%94%20Newta%20Tech`}
-                  className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045] border border-[#0FA4AF]/30 hover:border-[#AFDDE5] text-[#AFDDE5] hover:text-white transition-all group"
+                  className="flex items-center gap-2.5 p-3 rounded-xl bg-[#024045] border border-[#0FA4AF]/30 hover:border-[#AFDDE5] text-[#AFDDE5] hover:text-white transition-all group min-w-0"
                   title="Direct to awanareeb450@gmail.com (CC: mohammadwaizale@gmail.com)"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#AFDDE5] group-hover:scale-110 transition-transform flex-shrink-0" />
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0 flex-1 overflow-hidden">
                     <div className="font-semibold text-white truncate text-[11px]">awanareeb450@gmail.com</div>
                     <div className="text-[9px] text-[#AFDDE5]">Areeb • Linked</div>
                   </div>
@@ -425,6 +443,20 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                  {/* Invisible Anti-Bot Honeypot Field */}
+                  <div style={{ position: 'absolute', opacity: 0, zIndex: -1, pointerEvents: 'none', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }} aria-hidden="true">
+                    <label htmlFor="inquiry-website-fax">Leave this field blank</label>
+                    <input
+                      id="inquiry-website-fax"
+                      type="text"
+                      name="website_fax"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {serverError && (
                     <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
@@ -595,8 +627,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
 
       {/* SMTP Configuration Modal */}
       {showConfigModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg rounded-3xl bg-[#024045] border border-[#0FA4AF]/40 p-7 sm:p-8 shadow-2xl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg rounded-3xl bg-[#024045] border border-[#0FA4AF]/40 p-7 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => { setShowConfigModal(false); setConfigSaveStatus(null); }}
               className="absolute top-5 right-5 p-2 rounded-lg text-[#AFDDE5] hover:text-white hover:bg-white/[0.08] transition-colors"
@@ -680,6 +712,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                 />
                 <p className="text-[10px] text-[#AFDDE5] mt-1 font-sans">
                   For Gmail: Generate a 16-character code at <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noreferrer" className="text-white underline">myaccount.google.com/apppasswords</a>.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-white mb-1 font-bold">
+                  Admin Authorization Key (Required if configured on server)
+                </label>
+                <input
+                  type="password"
+                  value={adminKey}
+                  onChange={(e) => setAdminKey(e.target.value)}
+                  placeholder="Server ADMIN_API_KEY"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#003135] border border-[#0FA4AF]/40 text-white focus:outline-none focus:ring-1 focus:ring-[#AFDDE5]"
+                />
+                <p className="text-[10px] text-[#AFDDE5]/80 mt-1 font-sans">
+                  Protects mail configuration against unauthorized administrative mutations.
                 </p>
               </div>
 

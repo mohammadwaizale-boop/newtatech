@@ -7,18 +7,19 @@ import { ProductsSection } from './components/sections/ProductsSection';
 import { ProjectsSection } from './components/sections/ProjectsSection';
 import { AboutSection } from './components/sections/AboutSection';
 import { ProcessSection } from './components/sections/ProcessSection';
-import { TechStackSection } from './components/sections/TechStackSection';
 import { CtaSection } from './components/sections/CtaSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { InteractiveConsole } from './components/ui/InteractiveConsole';
 import { WaitlistModal } from './components/modals/WaitlistModal';
 import { CaseStudyModal } from './components/modals/CaseStudyModal';
 import { LegalModal } from './components/modals/LegalModal';
+import { ProductDetailModal } from './components/modals/ProductDetailModal';
 import { ProductItem, ProjectItem } from './types';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [selectedWaitlistProduct, setSelectedWaitlistProduct] = useState<ProductItem | null>(null);
+  const [selectedProductDetail, setSelectedProductDetail] = useState<{ product: ProductItem; initialTab: 'demo' | 'specs' | 'waitlist' } | null>(null);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<ProjectItem | null>(null);
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | null>(null);
   const [contactInitialType, setContactInitialType] = useState<string>('AI Solution');
@@ -113,6 +114,7 @@ export default function App() {
           {/* Products Built by Nexa */}
           <ProductsSection
             onJoinWaitlist={(prod) => setSelectedWaitlistProduct(prod)}
+            onOpenProduct={(prod, initialTab = 'demo') => setSelectedProductDetail({ product: prod, initialTab })}
           />
 
           {/* Portfolio & Selected Work */}
@@ -125,9 +127,6 @@ export default function App() {
 
           {/* 5-Step Process */}
           <ProcessSection />
-
-          {/* Technology Ecosystem */}
-          <TechStackSection />
 
           {/* Interactive Pipeline Harness */}
           <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -165,6 +164,12 @@ export default function App() {
       </div>
 
       {/* Modals */}
+      <ProductDetailModal
+        product={selectedProductDetail?.product || null}
+        initialTab={selectedProductDetail?.initialTab || 'demo'}
+        onClose={() => setSelectedProductDetail(null)}
+      />
+
       <WaitlistModal
         product={selectedWaitlistProduct}
         onClose={() => setSelectedWaitlistProduct(null)}

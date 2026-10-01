@@ -1,15 +1,27 @@
 import React from 'react';
 import { PRODUCTS_DATA } from '../../data/companyData';
 import { ProductItem } from '../../types';
-import { Sparkles, ArrowRight, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Zap } from 'lucide-react';
 
 interface ProductsSectionProps {
   onJoinWaitlist: (product: ProductItem) => void;
+  onOpenProduct?: (product: ProductItem, initialTab?: 'demo' | 'specs' | 'waitlist') => void;
 }
 
-export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist }) => {
-  const flagshipProduct = PRODUCTS_DATA[0]; // Nexa Portfolio AI
+export const ProductsSection: React.FC<ProductsSectionProps> = ({
+  onJoinWaitlist,
+  onOpenProduct,
+}) => {
+  const flagshipProduct = PRODUCTS_DATA[0]; // Newta Portfolio AI
   const pipelineProducts = PRODUCTS_DATA.slice(1);
+
+  const handleOpen = (prod: ProductItem, tab: 'demo' | 'specs' | 'waitlist' = 'demo') => {
+    if (onOpenProduct) {
+      onOpenProduct(prod, tab);
+    } else {
+      onJoinWaitlist(prod);
+    }
+  };
 
   return (
     <section id="products" className="relative py-28 border-t border-[#0FA4AF]/20 bg-[#003135]">
@@ -24,7 +36,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
             Products by Newta
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#AFDDE5] leading-relaxed">
-            We don’t just build for businesses. We engineer proprietary digital products of our own.
+            We don’t just build for businesses. We engineer proprietary digital products of our own. Select any product below to launch its interactive engine and evaluate its architecture.
           </p>
         </div>
 
@@ -72,28 +84,39 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
                 ))}
               </div>
 
-              {/* Interactive Waitlist CTA */}
-              <div className="pt-4 flex items-center gap-4">
+              {/* Interactive CTA Actions */}
+              <div className="pt-4 flex flex-wrap items-center gap-4">
                 <button
-                  onClick={() => onJoinWaitlist(flagshipProduct)}
+                  onClick={() => handleOpen(flagshipProduct, 'demo')}
                   className="inline-flex items-center gap-2.5 px-7 py-3.5 text-xs font-bold text-white bg-gradient-to-r from-[#0FA4AF] to-[#024045] hover:from-[#14B8C4] hover:to-[#0FA4AF] border border-[#AFDDE5]/40 active:scale-95 transition-all duration-200 rounded-full shadow-[0_4px_20px_rgba(15,164,175,0.45)] hover:shadow-[0_6px_28px_rgba(15,164,175,0.7)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#AFDDE5] cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-[#AFDDE5]" />
-                  <span>Join Waitlist</span>
+                  <Zap className="w-4 h-4 text-[#AFDDE5]" />
+                  <span>Launch Interactive Engine</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
-                <span className="text-xs text-[#AFDDE5]/80 font-mono">
-                  Early beta access &amp; founding credits
-                </span>
+                <button
+                  onClick={() => handleOpen(flagshipProduct, 'waitlist')}
+                  className="inline-flex items-center gap-2 px-5 py-3 text-xs font-bold font-mono text-[#AFDDE5] hover:text-white bg-[#003135] hover:bg-[#003135]/80 border border-[#0FA4AF]/40 rounded-full transition-colors cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#0FA4AF]" />
+                  <span>Join Waitlist</span>
+                </button>
               </div>
             </div>
 
-            {/* Visual Workspace Preview Box */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-2xl bg-[#003135] border border-[#0FA4AF]/35 p-5 shadow-inner">
+            {/* Visual Workspace Preview Box (Clickable to open) */}
+            <div
+              onClick={() => handleOpen(flagshipProduct, 'demo')}
+              className="lg:col-span-5 cursor-pointer group/preview"
+              title="Click to open interactive simulator"
+            >
+              <div className="relative rounded-2xl bg-[#003135] border border-[#0FA4AF]/35 group-hover/preview:border-[#AFDDE5] p-5 shadow-inner transition-all">
                 <div className="flex items-center justify-between pb-3 border-b border-[#0FA4AF]/20 text-xs font-mono text-[#AFDDE5]">
-                  <span className="text-[#AFDDE5] font-bold">workspace / generator</span>
-                  <span className="text-[#0FA4AF]">v0.9-alpha</span>
+                  <span className="text-[#AFDDE5] font-bold flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-[#0FA4AF]" />
+                    <span>workspace / generator</span>
+                  </span>
+                  <span className="text-[#0FA4AF] text-[10px] bg-[#024045] px-2 py-0.5 rounded border border-[#0FA4AF]/30">Click to Open ↗</span>
                 </div>
                 
                 <div className="mt-4 space-y-3 font-mono text-xs">
@@ -121,14 +144,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
           </div>
         </div>
 
-        {/* Future Product Pipeline Grid */}
+        {/* Future Product Pipeline Grid (Fully interactive & clickable) */}
         <div className="mt-14">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-white tracking-tight font-display">
               Software Pipeline In Progress
             </h3>
             <span className="text-xs font-mono text-[#AFDDE5]/80">
-              Honest status • No vaporware
+              Click any product to launch its engine &amp; test live
             </span>
           </div>
 
@@ -136,11 +159,13 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
             {pipelineProducts.map((prod) => (
               <div
                 key={prod.id}
-                className="rounded-2xl bg-[#024045]/90 p-6 border border-[#0FA4AF]/30 hover:border-[#AFDDE5] transition-all duration-300 flex flex-col justify-between shadow-lg"
+                onClick={() => handleOpen(prod, 'demo')}
+                className="rounded-2xl bg-[#024045]/90 p-6 border border-[#0FA4AF]/30 hover:border-[#AFDDE5] hover:scale-[1.01] hover:shadow-2xl transition-all duration-300 flex flex-col justify-between shadow-lg cursor-pointer group relative"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#003135] text-[#AFDDE5] border border-[#0FA4AF]/40 font-semibold">
+                    <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#003135] text-[#AFDDE5] border border-[#0FA4AF]/40 font-semibold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0FA4AF] group-hover:bg-[#AFDDE5] transition-colors" />
                       {prod.status}
                     </span>
                     <span className="text-[11px] font-mono text-[#AFDDE5]/70">
@@ -148,9 +173,15 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-white mb-1 font-display">
-                    {prod.name}
-                  </h4>
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-bold text-white mb-1 font-display group-hover:text-[#AFDDE5] transition-colors">
+                      {prod.name}
+                    </h4>
+                    <span className="text-[10px] font-mono text-[#0FA4AF] bg-[#003135] px-2 py-0.5 rounded border border-[#0FA4AF]/30 opacity-80 group-hover:opacity-100 transition-opacity">
+                      Interactive ↗
+                    </span>
+                  </div>
+
                   <p className="text-xs text-[#AFDDE5] font-medium mb-3">
                     {prod.tagline}
                   </p>
@@ -168,13 +199,29 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onJoinWaitlist
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#0FA4AF]/20 flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#AFDDE5]/70">{prod.category}</span>
+                <div className="pt-4 border-t border-[#0FA4AF]/20 flex flex-wrap items-center justify-between gap-2">
                   <button
-                    onClick={() => onJoinWaitlist(prod)}
-                    className="text-xs font-bold text-[#AFDDE5] hover:text-white transition-colors cursor-pointer"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpen(prod, 'demo');
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#0FA4AF] to-[#024045] hover:from-[#14B8C4] hover:to-[#0FA4AF] border border-[#AFDDE5]/40 text-white text-xs font-bold font-mono transition-all shadow-sm cursor-pointer whitespace-nowrap flex-shrink-0"
                   >
-                    Notify Me →
+                    <Zap className="w-3 h-3 text-[#AFDDE5]" />
+                    <span>Open &amp; Work</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpen(prod, 'waitlist');
+                    }}
+                    className="text-xs font-mono font-bold text-[#AFDDE5] hover:text-white transition-colors cursor-pointer py-1 px-2 whitespace-nowrap"
+                  >
+                    Waitlist →
                   </button>
                 </div>
               </div>

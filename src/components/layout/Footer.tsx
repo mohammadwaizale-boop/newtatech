@@ -49,20 +49,20 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy, onOpenTerms }) =>
                 <span className="font-bold">Email Both Engineers</span>
                 <span className="text-[10px] text-[#0FA4AF] group-hover:translate-x-0.5 transition-transform">↗</span>
               </a>
-              <div className="flex flex-col sm:flex-row gap-2 text-[11px] text-[#AFDDE5]">
+              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 text-[11px] text-[#AFDDE5]">
                 <a
                   href="mailto:mohammadwaizale@gmail.com?cc=awanareeb450@gmail.com&subject=Project%20Inquiry%20%E2%80%94%20Newta%20Tech"
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 break-all"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0FA4AF]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0FA4AF] flex-shrink-0" />
                   <span>mohammadwaizale@gmail.com</span>
                 </a>
-                <span className="hidden sm:inline text-[#0FA4AF]">•</span>
+                <span className="hidden sm:inline text-[#0FA4AF] flex-shrink-0">•</span>
                 <a
                   href="mailto:awanareeb450@gmail.com?cc=mohammadwaizale@gmail.com&subject=Project%20Inquiry%20%E2%80%94%20Newta%20Tech"
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 break-all"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#AFDDE5]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#AFDDE5] flex-shrink-0" />
                   <span>awanareeb450@gmail.com</span>
                 </a>
               </div>

@@ -40,26 +40,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartProject, activeSection })
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#003135]/90 backdrop-blur-xl border-b border-[#0FA4AF]/25 shadow-[0_6px_30px_rgba(0,49,53,0.7)] py-3.5'
-          : 'bg-transparent py-5'
+          ? 'bg-[#003135]/95 backdrop-blur-xl border-b border-[#0FA4AF]/25 shadow-[0_6px_30px_rgba(0,49,53,0.7)] py-3'
+          : 'bg-transparent py-4 sm:py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           {/* Brand Wordmark */}
           <a
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0FA4AF] rounded-lg"
+            className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0FA4AF] rounded-lg flex-shrink-0"
             aria-label="Newta Tech Home"
           >
             <NexaLogo variant="full" size="md" glow={isScrolled} />
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-[#024045]/80 border border-[#0FA4AF]/30 backdrop-blur-md">
+          <nav className="hidden xl:flex items-center gap-1 p-1 rounded-full bg-[#024045]/80 border border-[#0FA4AF]/30 backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartProject, activeSection })
                   key={link.id}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 whitespace-nowrap ${
+                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 whitespace-nowrap ${
                     isActive
                       ? 'bg-[#0FA4AF] text-white shadow-[0_0_15px_rgba(15,164,175,0.6)] font-bold'
                       : 'text-[#AFDDE5] hover:text-white hover:bg-white/[0.08]'
@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartProject, activeSection })
           </nav>
 
           {/* Right Action Zone */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-3 flex-shrink-0">
             <button
               onClick={onStartProject}
               className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-gradient-to-r from-[#0FA4AF] to-[#024045] hover:from-[#14B8C4] hover:to-[#0FA4AF] border border-[#AFDDE5]/40 active:scale-95 transition-all duration-200 rounded-full shadow-[0_2px_16px_rgba(15,164,175,0.4)] hover:shadow-[0_4px_24px_rgba(15,164,175,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#AFDDE5] whitespace-nowrap cursor-pointer group"
@@ -90,8 +90,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartProject, activeSection })
             </button>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile/Tablet Hamburger Toggle */}
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={onStartProject}
               className="sm:hidden px-3 py-1.5 text-xs font-bold text-white bg-[#0FA4AF] rounded-full shadow-sm"
@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartProject, activeSection })
 
       {/* Mobile Animated Dropdown Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#003135]/98 backdrop-blur-2xl border-b border-[#0FA4AF]/30 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4 duration-200">
+        <div className="xl:hidden bg-[#003135]/98 backdrop-blur-2xl border-b border-[#0FA4AF]/30 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4 duration-200 shadow-2xl">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;

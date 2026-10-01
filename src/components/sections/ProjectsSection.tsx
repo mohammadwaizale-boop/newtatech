@@ -79,9 +79,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenCaseStud
                 </div>
 
                 {/* Architectural Metric Badges Bottom of Image */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-white">
+                <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center gap-2 text-xs font-mono text-white z-10">
                   {project.metrics.map((m, idx) => (
-                    <div key={idx} className="bg-[#003135]/90 backdrop-blur-md px-2.5 py-1 rounded-lg border border-[#0FA4AF]/30">
+                    <div key={idx} className="bg-[#003135]/90 backdrop-blur-md px-2.5 py-1 rounded-lg border border-[#0FA4AF]/30 shadow-sm">
                       <span className="text-[#AFDDE5]/80 text-[10px] block">{m.label}</span>
                       <span className="text-[#AFDDE5] font-bold">{m.value}</span>
                     </div>
@@ -101,8 +101,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenCaseStud
                 </div>
 
                 {/* Technologies and View Case Study */}
-                <div className="pt-4 border-t border-[#0FA4AF]/20 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="pt-4 border-t border-[#0FA4AF]/20 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-1.5 min-w-0">
                     {project.technologies.slice(0, 3).map((tech, idx) => (
                       <span
                         key={idx}

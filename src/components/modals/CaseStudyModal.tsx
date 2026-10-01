@@ -12,7 +12,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div className="relative w-full max-w-3xl rounded-3xl bg-[#024045] border border-[#0FA4AF]/40 p-6 sm:p-10 shadow-2xl max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button

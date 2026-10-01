@@ -105,7 +105,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
 
       {/* Deep Service Architectural Details Modal */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-2xl rounded-2xl bg-[#024045] border border-[#0FA4AF]/50 p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Modal Close Button */}
             <button

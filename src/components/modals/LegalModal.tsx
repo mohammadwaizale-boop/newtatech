@@ -12,7 +12,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
   const isPrivacy = type === 'privacy';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div className="relative w-full max-w-2xl rounded-3xl bg-[#024045] border border-[#0FA4AF]/40 p-7 sm:p-9 shadow-2xl max-h-[85vh] overflow-y-auto">
         <button
           onClick={onClose}
